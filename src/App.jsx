@@ -19,7 +19,6 @@ function App() {
   };
 
   const getDirection = ({ elevation, windage }) => {
-    console.log(windage);
     if (elevation != null) {
       if (elevation == 0) {
         return;
