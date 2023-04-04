@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/turret-settings-calculator/static/css/main.a839da4c.css",
+    "main.js": "/turret-settings-calculator/static/js/main.554a56cf.js",
+    "static/media/doel1.png": "/turret-settings-calculator/static/media/doel1.d5c6d588d9fddd36caf2.png",
+    "index.html": "/turret-settings-calculator/index.html",
+    "main.a839da4c.css.map": "/turret-settings-calculator/static/css/main.a839da4c.css.map",
+    "main.554a56cf.js.map": "/turret-settings-calculator/static/js/main.554a56cf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a839da4c.css",
+    "static/js/main.554a56cf.js"
+  ]
+}
