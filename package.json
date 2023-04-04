@@ -1,6 +1,6 @@
 {
   "homepage": "http://rmekelschot.github.io/turret-settings-calculator",
-  "name": "test",
+  "name": "turret-settings-calculator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
