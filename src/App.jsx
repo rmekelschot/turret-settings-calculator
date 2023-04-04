@@ -173,9 +173,9 @@ function App() {
           <p>Type richtkijker</p>
           <select className="w-100">
             <option value="mrad">1/10 MRAD</option>
-            <option value="moa" disabled>
+            {/* <option value="moa" disabled>
               1/4 MOA (w.i.p.)
-            </option>
+            </option> */}
           </select>
         </div>
         <div className="form-group">
