@@ -84,7 +84,7 @@ button {
     padding-top: 0px;
       display: block;
       overflow-x: hidden;
-      background-color: #000;
+      background-color: #454c61;
   }
 
   .form {
@@ -92,5 +92,3 @@ button {
       width: 100%;
       height: 100vh;
       border-radius: 0px;
-  }
-}
