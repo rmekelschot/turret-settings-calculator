@@ -62,7 +62,7 @@ function App() {
     // eerst naar 100 meter rekenen
     // daarna delen door de afstand
     _y = _y * 0.1; // 10 clicks per miliradiaal
-    _y = (_y * 1000) / afstand; // 1000 mm is 100 meter
+    _y = (_y * 1000) / afstand; // 1000 cm is 100 meter
 
     // ook voor de x-as
     _x = _x * 0.1;
