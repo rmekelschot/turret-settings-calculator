@@ -1,8 +1,8 @@
 import { useState } from "react";
-import doel1 from "./assets/doel1.png";
-import hit from "./assets/hit.png";
+import doel1 from "./doel1.png";
+import hit from "./hit.png";
 
-import "./style.css";
+import "./index.css";
 
 function App() {
   const [x, setX] = useState(70);
@@ -20,7 +20,7 @@ function App() {
 
   const getDirection = ({ elevation, windage }) => {
     if (elevation != null) {
-      if (elevation == 0) {
+      if (elevation === 0) {
         return;
       } else if (elevation > 0) {
         return "omhoog";
@@ -30,7 +30,7 @@ function App() {
     }
 
     if (windage != null) {
-      if (windage == 0) {
+      if (windage === 0) {
         return;
       } else if (windage > 0) {
         return "links";
@@ -90,6 +90,7 @@ function App() {
         <div className="flex">
           <div style={{ position: "relative" }}>
             <img
+            alt="doel"
               src={doel1}
               style={{
                 width: 140 * sizeMultiplier,
@@ -97,6 +98,7 @@ function App() {
               }}
             />
             <img
+            alt="raakpunt"
               src={hit}
               style={{
                 position: "absolute",
