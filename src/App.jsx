@@ -18,89 +18,99 @@ function App() {
     setAfstand(e.target.value);
   };
 
-  const getDirection = (({elevation, windage}) => {
-    console.log(windage)
-    if(elevation != null) {
-      if(elevation == 0) {
+  const getDirection = ({ elevation, windage }) => {
+    console.log(windage);
+    if (elevation != null) {
+      if (elevation == 0) {
         return;
-      } else if(elevation > 0) {
-        return 'omhoog';
+      } else if (elevation > 0) {
+        return "omhoog";
       } else {
-        return 'omlaag';
+        return "omlaag";
       }
     }
 
-    if(windage != null) {
-      if(windage == 0) {
+    if (windage != null) {
+      if (windage == 0) {
         return;
-      } else if(windage > 0) {
-        return 'links';
+      } else if (windage > 0) {
+        return "links";
       } else {
-        return 'rechts';
+        return "rechts";
       }
     }
 
+    return "";
+  };
 
-    return '';
-  });
+  const getWindage = () => {
+    return windage > 0 ? windage.toFixed() : windage.toFixed() * -1;
+  };
 
-  const getWindage = (() => {
-    return (windage>0) ? windage.toFixed() : windage.toFixed() *-1;
-  });
-  
-  const getElevation = (() => {
-    return (elevation>0) ? elevation.toFixed() : elevation.toFixed() *-1;
-  });
+  const getElevation = () => {
+    return elevation > 0 ? elevation.toFixed() : elevation.toFixed() * -1;
+  };
 
   const berekenen = () => {
     let _x = (parseInt(x) - 70) / 10;
     let _y = (parseInt(y) - 70) / 10;
 
     // MRAD
-    // 1 miliradiaal is 5 cm op 50m, 10cm op 100m
+    // 1 miliradiaal is 10cm op 100m
     // 0.1 miliradiaal per click met een 1/10 MRAD richtkijker
 
     // eerst naar 100 meter rekenen
     // daarna delen door de afstand
-    _y = _y*.10; // 10 clicks per miliradiaal
-    _y = _y * 1000 / afstand; // 1000 mm is 100 meter
+    _y = _y * 0.1; // 10 clicks per miliradiaal
+    _y = (_y * 1000) / afstand; // 1000 mm is 100 meter
 
     // ook voor de x-as
-    _x = _x*.10;
-    _x = _x * 1000 / afstand
-    
-    setWindage(_x)
-    setElevation(_y)
+    _x = _x * 0.1;
+    _x = (_x * 1000) / afstand;
+
+    setWindage(_x);
+    setElevation(_y);
   };
 
   return (
     <div className="App">
       <div className="form">
-        <div className="form-group">
-          <p>Windage: {getWindage()} clicks {getDirection({windage:windage.toFixed()})}</p>
-          <p>Elevation: {getElevation()} clicks {getDirection({elevation:elevation.toFixed()})}</p>
+        <div
+          className="form-group flex"
+          style={{ justifyContent: "space-evenly" }}
+        >
+          <p>
+            E: {getElevation()} clicks{" "}
+            {getDirection({ elevation: elevation.toFixed() })}
+          </p>
+          <p>
+            W: {getWindage()} clicks{" "}
+            {getDirection({ windage: windage.toFixed() })}
+          </p>
         </div>
-        <div style={{ position: "relative" }}>
-          <img
-            src={doel1}
-            style={{
-              width: 140 * sizeMultiplier,
-              height: 140 * sizeMultiplier,
-            }}
-          />
-          <img
-            src={hit}
-            style={{
-              position: "absolute",
-              width: hitPixelSize,
-              height: hitPixelSize,
-              top: y * sizeMultiplier - hitPixelSize / 2,
-              left: x * sizeMultiplier - hitPixelSize / 2,
-              zIndex: 1,
-            }}
-          />
+        <div className="flex">
+          <div style={{ position: "relative" }}>
+            <img
+              src={doel1}
+              style={{
+                width: 140 * sizeMultiplier,
+                height: 140 * sizeMultiplier,
+              }}
+            />
+            <img
+              src={hit}
+              style={{
+                position: "absolute",
+                width: hitPixelSize,
+                height: hitPixelSize,
+                top: y * sizeMultiplier - hitPixelSize / 2,
+                left: x * sizeMultiplier - hitPixelSize / 2,
+                zIndex: 1,
+              }}
+            />
+          </div>
         </div>
-        <div className="form-group">
+        <div className="form-group text-center">
           <p>Afwijking op de x-as: {x - 70}</p>
           <p>Afwijking op de y-as: {y - 70}</p>
         </div>
@@ -151,11 +161,17 @@ function App() {
         </div>
         <div className="form-group">
           <p>Afstand (in meter)</p>
-          <input type="number" placeholder="afstand" onChange={updateAfstand} value={afstand}/>
+          <input
+            className="w-100"
+            type="number"
+            placeholder="afstand"
+            onChange={updateAfstand}
+            value={afstand}
+          />
         </div>
         <div className="form-group">
           <p>Type richtkijker</p>
-          <select>
+          <select className="w-100">
             <option value="mrad">1/10 MRAD</option>
             <option value="moa" disabled>
               1/4 MOA (w.i.p.)
@@ -163,8 +179,11 @@ function App() {
           </select>
         </div>
         <div className="form-group">
-          <button className="w-100" onClick={()=>berekenen()}>Berekenen</button>
+          <button className="w-100" onClick={() => berekenen()}>
+            Berekenen
+          </button>
         </div>
+        <p className="w-100 text-center text-soft pt">made by mitchell</p>
       </div>
     </div>
   );
