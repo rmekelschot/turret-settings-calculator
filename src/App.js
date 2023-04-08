@@ -10,6 +10,7 @@ function App() {
   const [afstand, setAfstand] = useState(100);
   const [elevation, setElevation] = useState(0);
   const [windage, setWindage] = useState(0);
+  const [scopeType, setScopeType] = useState("mrad");
 
   const sizeMultiplier = 2;
   const hitPixelSize = 8;
@@ -54,18 +55,39 @@ function App() {
     let _x = (parseInt(x) - 70) / 10;
     let _y = (parseInt(y) - 70) / 10;
 
-    // MRAD
-    // 1 miliradiaal is 10cm op 100m
-    // 0.1 miliradiaal per click met een 1/10 MRAD richtkijker
+    if (scopeType === "mrad") {
+      // MRAD
+      // 1 miliradiaal is 10cm op 100m
+      // 0.1 miliradiaal per click met een 1/10 MRAD richtkijker
 
-    // eerst naar 100 meter rekenen
-    // daarna delen door de afstand
-    _y = _y * 0.1; // 10 clicks per miliradiaal
-    _y = (_y * 1000) / afstand; // 1000 cm is 100 meter
+      // eerst naar 100 meter rekenen
+      // daarna delen door de afstand
+      _y = _y * 0.1; // 10 clicks per miliradiaal
+      _y = (_y * 1000) / afstand; // 1000 cm is 100 meter
 
-    // ook voor de x-as
-    _x = _x * 0.1;
-    _x = (_x * 1000) / afstand;
+      // ook voor de x-as
+      _x = _x * 0.1;
+      _x = (_x * 1000) / afstand;
+    } else if (scopeType === "moa") {
+      // MOA
+      // 1 MOA is 1 inch op 100 yard
+      // eerst omrekenen naar inch/yard
+      let _afstandYard = parseInt(afstand) * 1.093613;
+
+      let i = 2.54; // 1 inch = 2.54 cm
+
+      let _xInch = _x / i;
+      let _yInch = _y / i;
+
+      // 4 clicks per MOA
+      _x = _xInch / 0.25
+      _y = _yInch / 0.25
+
+      // afstand omrekenen
+      _x = (_x * 100) / _afstandYard;
+      _y = (_y * 100) / _afstandYard;
+
+    }
 
     setWindage(_x);
     setElevation(_y);
@@ -90,7 +112,7 @@ function App() {
         <div className="flex">
           <div style={{ position: "relative" }}>
             <img
-            alt="doel"
+              alt="doel"
               src={doel1}
               style={{
                 width: 140 * sizeMultiplier,
@@ -98,7 +120,7 @@ function App() {
               }}
             />
             <img
-            alt="raakpunt"
+              alt="raakpunt"
               src={hit}
               style={{
                 position: "absolute",
@@ -112,8 +134,8 @@ function App() {
           </div>
         </div>
         <div className="form-group text-center">
-          <p>Afwijking op de x-as: {x - 70}</p>
-          <p>Afwijking op de y-as: {y - 70}</p>
+          <p>Afwijking op de x-as: {x - 70} mm</p>
+          <p>Afwijking op de y-as: {y - 70} mm</p>
         </div>
         <div className="form-group w-100">
           <div className="flex">
@@ -172,11 +194,12 @@ function App() {
         </div>
         <div className="form-group">
           <p>Type richtkijker</p>
-          <select className="w-100">
+          <select
+            className="w-100"
+            onChange={(e) => setScopeType(e.target.value)}
+          >
             <option value="mrad">1/10 MRAD</option>
-            {/* <option value="moa" disabled>
-              1/4 MOA (w.i.p.)
-            </option> */}
+            <option value="moa">1/4 MOA</option>
           </select>
         </div>
         <div className="form-group">
